@@ -10,6 +10,7 @@ namespace BankTests
         [TestMethod]
         public void TestMethod1()
         {
+            Console.WriteLine("We are in MSTest class");
         }
 
         [TestMethod]
