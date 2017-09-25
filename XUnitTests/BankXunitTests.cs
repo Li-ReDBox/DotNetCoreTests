@@ -1,18 +1,12 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using Xunit;
 using BankAccountNS;
 
-namespace BankTests
+namespace XUnitTests
 {
-    [TestClass]
-    public class BankAccountTests
+    public class UnitTest1
     {
-        [TestMethod]
-        public void TestMethod1()
-        {
-        }
-
-        [TestMethod]
+        [Fact]
         public void Debit_WithValidAmount_UpdatesBalance()
         {
             // arrange
@@ -26,10 +20,10 @@ namespace BankTests
 
             // assert
             double actual = account.Balance;
-            Assert.AreEqual(expected, actual, 0.001, "Account not debited correctly");
+            Assert.Equal<double>(expected, actual);
         }
 
-        [TestMethod]
+        [Fact]
         public void Debit_WhenAmountIsLessThanZero_ShouldThrowArgumentOutofRange()
         {
             double beginingBalance = 11.99;
@@ -39,13 +33,14 @@ namespace BankTests
             try
             {
                 account.Debit(debitAmount);
-            } catch (ArgumentOutOfRangeException ex)
+            }
+            catch (ArgumentOutOfRangeException ex)
             {
-                StringAssert.Contains(ex.Message, BankAccount.DebitAmountLessThanZeroMessage);
+                Assert.Contains(BankAccount.DebitAmountLessThanZeroMessage, ex.Message);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void Debit_WhenAmountIsMoreThanBalance_ShouldThrowArgumentOutOfRange()
         {
             double beginingBalance = 11.99;
@@ -55,13 +50,14 @@ namespace BankTests
             try
             {
                 account.Debit(debitAmount);
-            } catch (ArgumentOutOfRangeException ex)
+            }
+            catch (ArgumentOutOfRangeException ex)
             {
-                StringAssert.Contains(ex.Message, BankAccount.DebitAmountExceedsBalanceMessage);
+                Assert.Contains(BankAccount.DebitAmountExceedsBalanceMessage, ex.Message);
                 return;
             }
             // Make sure there was a test case really throw an Exception
-            Assert.Fail("No exception was thrown.");
+            Assert.True(0 == 1);
         }
     }
 }

@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BankAccountNS;
 
+// Created as .net core unit test: the same as Visual C# Unit Test Project
 namespace BankTests
 {
     [TestClass]
@@ -39,7 +40,8 @@ namespace BankTests
             try
             {
                 account.Debit(debitAmount);
-            } catch (ArgumentOutOfRangeException ex)
+            }
+            catch (ArgumentOutOfRangeException ex)
             {
                 StringAssert.Contains(ex.Message, BankAccount.DebitAmountLessThanZeroMessage);
             }
@@ -49,13 +51,14 @@ namespace BankTests
         public void Debit_WhenAmountIsMoreThanBalance_ShouldThrowArgumentOutOfRange()
         {
             double beginingBalance = 11.99;
-            double debitAmount = 100.0;
+            double debitAmount = 100.00;
             BankAccount account = new BankAccount("Mr. Bryan Walton", beginingBalance);
 
             try
             {
                 account.Debit(debitAmount);
-            } catch (ArgumentOutOfRangeException ex)
+            }
+            catch (ArgumentOutOfRangeException ex)
             {
                 StringAssert.Contains(ex.Message, BankAccount.DebitAmountExceedsBalanceMessage);
                 return;
