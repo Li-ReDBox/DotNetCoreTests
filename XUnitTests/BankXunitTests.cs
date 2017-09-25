@@ -30,14 +30,8 @@ namespace XUnitTests
             double debitAmount = -100.00;
             BankAccount account = new BankAccount("Mr. Bryan Walton", beginingBalance);
 
-            try
-            {
-                account.Debit(debitAmount);
-            }
-            catch (ArgumentOutOfRangeException ex)
-            {
-                Assert.Contains(BankAccount.DebitAmountLessThanZeroMessage, ex.Message);
-            }
+            Exception ex = Assert.Throws<ArgumentOutOfRangeException>(() => account.Debit(debitAmount));
+            Assert.Contains(BankAccount.DebitAmountLessThanZeroMessage, ex.Message);
         }
 
         [Fact]
@@ -47,17 +41,8 @@ namespace XUnitTests
             double debitAmount = 100.0;
             BankAccount account = new BankAccount("Mr. Bryan Walton", beginingBalance);
 
-            try
-            {
-                account.Debit(debitAmount);
-            }
-            catch (ArgumentOutOfRangeException ex)
-            {
-                Assert.Contains(BankAccount.DebitAmountExceedsBalanceMessage, ex.Message);
-                return;
-            }
-            // Make sure there was a test case really throw an Exception
-            Assert.True(0 == 1);
+            Exception ex = Assert.Throws<ArgumentOutOfRangeException>(() => account.Debit(debitAmount));
+            Assert.Contains(BankAccount.DebitAmountExceedsBalanceMessage, ex.Message);
         }
     }
 }
